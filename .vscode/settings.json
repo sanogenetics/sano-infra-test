@@ -1,0 +1,21 @@
+{
+  "python.pythonPath": "venv/bin/python",
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.linting.enabled": true,
+  "python.linting.pycodestyleEnabled": false,
+  "python.linting.flake8Args": [
+    "--max-line-length=90",
+    "--ignore=E402,F401,W504,W503,E203,E501"
+  ],
+  "python.sortImports.args": ["--multi-line=3"],
+  "python.formatting.provider": "black",
+  "python.formatting.blackArgs": ["--line-length", "90"],
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  }
+}

@@ -1,0 +1,17 @@
+-e .
+
+# sometimes an upgrade of the CLI is required
+# pip install --upgrade awscli
+
+aws_cdk.core~=1.3
+aws-cdk.aws-s3~=1.3
+aws_cdk.aws_ec2~=1.3
+aws_cdk.aws_rds~=1.3
+aws_cdk.aws_cloudfront~=1.3
+
+boto3==1.17.109
+black==21.6b0
+isort==5.9.2
+pytest==6.2.4
+flake8==3.9.2
+coloredlogs==15.0.1
