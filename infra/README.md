@@ -51,37 +51,3 @@ The process to follow to set up a new account is currently as follows:
     [profile <org>]
     region=<region>
 ```
-
-## Org Infrastructure Setup
-
-Some of the infrastructure stacks are environment independent. These are setup first, and then the environment
-dependant stacks can be set up afterwards. This process is called `Org Infrastructure Setup` and includes the setup of the Certificate stack, the VPC stack, and the VPN stack.
-
-The following instructions setup the base org infrastructure on which the environment infrastructure can be placed into:
-
-- Duplicate a config file in the infra-config repository and set second_8_bits to be unique for this AWS account / region combo.
-- Perform the following command line steps to generate and upload VPN client and server keys. The last two steps need variable replacements of <org> and <region>
-  ```bash
-  git clone https://github.com/OpenVPN/easy-rsa.git
-  cd easy-rsa/easyrsa3
-  ./easyrsa init-pki
-  ./easyrsa build-ca nopass
-  ./easyrsa build-server-full server nopass
-  ./easyrsa init-pki
-  ./easyrsa build-ca nopass
-  ./easyrsa build-server-full server nopass
-  ./easyrsa build-client-full client1.domain.tld nopass
-  mkdir ~/custom_folder/
-  cp pki/ca.crt ~/custom_folder/
-  cp pki/issued/server.crt ~/custom_folder/
-  cp pki/private/server.key ~/custom_folder/
-  cp pki/issued/client1.domain.tld.crt ~/custom_folder
-  cp pki/private/client1.domain.tld.key ~/custom_folder/
-  cd ~/custom_folder/
-  aws acm import-certificate --certificate fileb://server.crt --private-key fileb://server.key --certificate-chain fileb://ca.crt --profile <org> --region <region>
-  aws acm import-certificate --certificate fileb://client1.domain.tld.crt --private-key fileb://client1.domain.tld.key --certificate-chain fileb://ca.crt --profile <org> --region <region>
-  ```
-- Copy the ARNs given back to your into the right place in the vpn_stack.py file in the infra repo
-- TBD
-
-DOCUMENTATION UNFINISHED

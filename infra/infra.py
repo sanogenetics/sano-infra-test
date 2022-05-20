@@ -45,17 +45,15 @@ logger = logging.getLogger(__name__)
             "env-no-aliases",
             "env",
             "vpc",
-            "vpn",
             "backend",
             "portal",
             "admin",
-            "media",
         ]
     ),
 )
 def infra(mode, org, env, stack):
     # set an unused dev env for stacks that are env independent
-    if env == () and stack in ["certificate", "org", "vpc", "vpn"]:
+    if env == () and stack in ["certificate", "org", "vpc"]:
         env = ("dev",)
     else:
         logger.info("Please specify an environment for this stack")
@@ -87,9 +85,9 @@ def infra(mode, org, env, stack):
                 stack_manager.set_up_environment()
             elif stack == "env":
                 stack_manager.set_up_environment(add_aliases="yes")
-            elif stack in ["vpc", "vpn"]:
+            elif stack in ["vpc"]:
                 stack_manager.deploy_stack(f"sano-{org}-{stack}-stack")
-            elif stack in ["backend", "portal", "admin", "media"]:
+            elif stack in ["backend", "portal", "admin"]:
                 stack_manager.deploy_stack(
                     f"sano-{org}-{en}-{stack}-stack", add_aliases="yes"
                 )
@@ -101,9 +99,9 @@ def infra(mode, org, env, stack):
                 stack_manager.tear_down_org()
             elif stack == "env":
                 stack_manager.tear_down_environment()
-            elif stack in ["vpc", "vpn"]:
+            elif stack in ["vpc"]:
                 stack_manager.destroy_stack(f"sano-{org}-{stack}-stack")
-            elif stack in ["backend", "portal", "admin", "media"]:
+            elif stack in ["backend", "portal", "admin"]:
                 stack_manager.destroy_stack(f"sano-{org}-{en}-{stack}-stack")
 
         if mode == "deploy":

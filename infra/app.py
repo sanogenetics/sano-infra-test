@@ -22,7 +22,6 @@ domain = app.node.try_get_context("domain")
 domains = [domain, f"*.{domain}", f"*.dev.{domain}", f"*.staging.{domain}"]
 portal_subdomain = app.node.try_get_context("portal_subdomain")
 admin_subdomain = app.node.try_get_context("admin_subdomain")
-media_subdomain = app.node.try_get_context("media_subdomain")
 api_gateway_url = app.node.try_get_context("api_gateway_url")
 certificate_arn = app.node.try_get_context("certificate_arn")
 redirect_lambda_arn = app.node.try_get_context("redirect_lambda_arn")

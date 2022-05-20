@@ -137,7 +137,6 @@ class StackManager:
             "domain",
             "portal_subdomain",
             "admin_subdomain",
-            "media_subdomain",
             "api_gateway_url",
             "certificate_arn",
             "redirect_lambda_arn",
@@ -310,12 +309,8 @@ class StackManager:
     def set_up_org(self):
         # Deploy VPC stack
         self.deploy_stack(f"sano-{self.org}-vpc-stack")
-        # Deploy VPN stack
-        self.deploy_stack(f"sano-{self.org}-vpn-stack")
 
     def tear_down_org(self):
-        # Destroy VPN stack
-        self.destroy_stack(f"sano-{self.org}-vpn-stack")
         # Destroy VPC stack
         self.destroy_stack(f"sano-{self.org}-vpc-stack")
 
@@ -348,18 +343,11 @@ class StackManager:
         self.deploy_stack(f"{self.SOE}-admin-stack", add_aliases)
         self.deploy_admin(invalidate_cache=(add_aliases == "yes"))
 
-        # Deploy MEDIA stack
-        self.deploy_stack(f"{self.SOE}-media-stack", add_aliases)
-
     def set_up_environment(self, add_aliases="no"):
         self.set_up_server()
         self.set_up_clients(add_aliases)
 
     def tear_down_environment(self):
-        # Destroy MEDIA stack
-        self.clear_s3_bucket(f"{self.SOE}-media-uploads")
-        self.destroy_stack(f"{self.SOE}-media-stack")
-
         # Destroy ADMIN stack
         self.clear_s3_bucket(f"{self.SOE}-admin")
         self.destroy_stack(f"{self.SOE}-admin-stack")

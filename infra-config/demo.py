@@ -8,19 +8,16 @@ infra = {
     "dev": {
         "portal_subdomain": "dev.",
         "admin_subdomain": "admin.dev.",
-        "media_subdomain": "media.dev.",
         "db_password": "a3XXXXXXXXXXXec",
     },
     "staging": {
         "portal_subdomain": "staging.",
         "admin_subdomain": "admin.staging.",
-        "media_subdomain": "media.staging.",
         "db_password": "86XXXXXXXXXXXa5",
     },
     "prod": {
         "portal_subdomain": "",
         "admin_subdomain": "admin.",
-        "media_subdomain": "media.",
         "db_password": "33XXXXXXXXXXX68",
     },
 }
