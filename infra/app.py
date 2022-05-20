@@ -6,10 +6,8 @@ from aws_cdk import core as cdk
 from stacks.admin_stack import AdminStack
 from stacks.backend_stack import BackendStack
 from stacks.certificate_stack import CertificateStack
-from stacks.media_stack import MediaStack
 from stacks.portal_stack import PortalStack
 from stacks.vpc_stack import VpcStack
-from stacks.vpn_stack import VpnStack
 
 logger = logging.getLogger(__name__)
 
@@ -48,18 +46,6 @@ vpc_stack = VpcStack(
     second_8_bits=second_8_bits,
     env=cdk.Environment(region=region),
 )
-
-vpn_stack = VpnStack(
-    app,
-    f"sano-{org}-vpn-stack",
-    org=org,
-    region=region,
-    vpc=vpc_stack.vpc,
-    internet_gateway=vpc_stack.internet_gateway,
-    second_8_bits=second_8_bits,
-    env=cdk.Environment(region=region),
-)
-vpn_stack.add_dependency(vpc_stack)
 
 backend_stack = BackendStack(
     app,
@@ -101,19 +87,6 @@ admin_stack = AdminStack(
     domain=domain,
     admin_subdomain=admin_subdomain,
     api_gateway_url=api_gateway_url,
-    certificate_arn=certificate_arn,
-    add_aliases=add_aliases,
-    env=cdk.Environment(region=region),
-)
-
-media_stack = MediaStack(
-    app,
-    f"{SOE}-media-stack",
-    org=org,
-    envir=env,
-    region=region,
-    domain=domain,
-    media_subdomain=media_subdomain,
     certificate_arn=certificate_arn,
     add_aliases=add_aliases,
     env=cdk.Environment(region=region),
